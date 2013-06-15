@@ -2,19 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="re.saber.springtest2.mapper.BoardMapper">
 
-	<select id="getArticleList" resultType="re.saber.springtest2.models.Article">
+	<select id="getArticleList" resultType="re.saber.springtest2.model.Article">
 		SELECT `id`, `author`, `subject`, `created` FROM `articles` ORDER BY `created` DESC LIMIT #{offset}, #{count}
 	</select>
 	
-	<select id="getArticle" resultType="re.saber.springtest2.models.Article">
+	<select id="getArticle" resultType="re.saber.springtest2.model.Article">
 		SELECT * FROM `articles` WHERE id = #{id}
 	</select>
 	
-	<insert id="insertArticle" parameterType="re.saber.springtest2.models.Article" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insertArticle" parameterType="re.saber.springtest2.model.Article" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO `articles` (`author`, `subject`, `content`, `created`) VALUES (#{author}, #{subject}, #{content}, NOW());
 	</insert>
 	
-	<update id="updateArticle" parameterType="re.saber.springtest2.models.Article">
+	<update id="updateArticle" parameterType="re.saber.springtest2.model.Article">
 		UPDATE `articles` SET `subject` = #{subject}, `content` = #{content} WHERE `id` = #{id}
 	</update>
 	
@@ -23,11 +23,11 @@
 	</delete>
 	
 	
-	<select id="getCommentsForArticle" resultType="re.saber.springtest2.models.Comment">
+	<select id="getCommentsForArticle" resultType="re.saber.springtest2.model.Comment">
 		SELECT * FROM comments WHERE 
 	</select>
 	
-	<insert id="insertComment" parameterType="re.saber.springtest2.models.Comment">
+	<insert id="insertComment" parameterType="re.saber.springtest2.model.Comment">
 		
 	</insert>
 

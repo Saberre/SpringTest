@@ -1,14 +1,14 @@
-package re.saber.springtest2.models;
+package re.saber.springtest2.model;
 
 import java.util.Date;
 
-public class Comment {
+public class Article {
 
 	private int id;
 
-	private Article article;
-
 	private String author;
+
+	private String subject;
 
 	private String content;
 
@@ -22,20 +22,20 @@ public class Comment {
 		this.id = id;
 	}
 
-	public Article getArticle() {
-		return article;
-	}
-
-	public void setArticle(Article article) {
-		this.article = article;
-	}
-
 	public String getAuthor() {
 		return author;
 	}
 
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 
 	public String getContent() {

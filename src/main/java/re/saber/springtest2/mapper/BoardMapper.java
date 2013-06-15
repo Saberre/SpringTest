@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import re.saber.springtest2.models.Article;
+import re.saber.springtest2.model.Article;
 
 public interface BoardMapper {
 

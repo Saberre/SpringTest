@@ -1,4 +1,4 @@
-package re.saber.springtest2.controllers;
+package re.saber.springtest2.controller;
 
 import java.util.List;
 
@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import re.saber.springtest2.mapper.BoardMapper;
-import re.saber.springtest2.models.Article;
-import re.saber.springtest2.validators.ArticleValidator;
+import re.saber.springtest2.model.Article;
+import re.saber.springtest2.validator.ArticleValidator;
 
 /**
  * Handles requests for the application home page.
@@ -45,10 +46,16 @@ public class ArticleController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String list(Model model) {
-		List<Article> articles = boardMapper.getArticleList(0, 30);
+	public String list(@RequestParam(value = "count", required = false, defaultValue = "30") int count, Model model) {
+		if (count < 30)
+			count = 30;
+		else if (count > 100)
+			count = 100;
+		List<Article> articles = boardMapper.getArticleList(0, count);
 
 		model.addAttribute("articles", articles);
+		model.addAttribute("count", count);
+
 		return "list";
 	}
 

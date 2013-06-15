@@ -6,6 +6,14 @@
 	<jsp:param name="title" value="List" />
 </jsp:include>
 <h1>Board</h1>
+<form>
+	<select name="count">
+		<option value="30"<c:if test="${count == 30}"> selected</c:if>>30개</option>
+		<option value="50"<c:if test="${count == 50}"> selected</c:if>>50개</option>
+		<option value="100"<c:if test="${count == 100}"> selected</c:if>>100개</option>
+	</select>
+	<button type="submit" class="btn">Go</button>
+</form>
 <table class="table table-hover">
 	<thead>
 		<tr>

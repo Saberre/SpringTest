@@ -1,9 +1,9 @@
-package re.saber.springtest2.validators;
+package re.saber.springtest2.validator;
 
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 
-import re.saber.springtest2.models.Article;
+import re.saber.springtest2.model.Article;
 
 public class ArticleValidator {
 
