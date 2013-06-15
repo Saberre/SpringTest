@@ -6,15 +6,12 @@
 		SELECT `id`, `author`, `subject`, `created` FROM `articles` ORDER BY `created` DESC LIMIT #{offset}, #{count}
 	</select>
 	
-	<select id="'getArticle" resultMap="articleResultMap">
+	<select id="getArticle" resultType="re.saber.springtest2.models.Article">
 		SELECT * FROM `articles` WHERE id = #{id}
 	</select>
 	
-	<insert id="insertArticle" parameterType="re.saber.springtest2.models.Article">
+	<insert id="insertArticle" parameterType="re.saber.springtest2.models.Article" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO `articles` (`author`, `subject`, `content`, `created`) VALUES (#{author}, #{subject}, #{content}, NOW());
-		<selectKey keyProperty="id" resultType="int" order="AFTER">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
 	</insert>
 	
 	<update id="updateArticle" parameterType="re.saber.springtest2.models.Article">
@@ -22,11 +19,16 @@
 	</update>
 	
 	<delete id="deleteArticle">
+		DELETE FROM `articles` WHERE `id` = #{id}
 	</delete>
 	
 	
 	<select id="getCommentsForArticle" resultType="re.saber.springtest2.models.Comment">
 		SELECT * FROM comments WHERE 
 	</select>
+	
+	<insert id="insertComment" parameterType="re.saber.springtest2.models.Comment">
+		
+	</insert>
 
 </mapper>

@@ -24,19 +24,7 @@
 			<td><fmt:formatDate value="${article.created}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 		</tr>
 		</c:forEach>
-		<tr>
-			<td>2</td>
-			<td>lollol</td>
-			<td>troll</td>
-			<td>2013-03-03 11:11:11</td>
-		</tr>
-		<tr>
-			<td>1</td>
-			<td>lol</td>
-			<td>trollee</td>
-			<td>2013-03-02 11:11:11</td>
-		</tr>
 	</tbody>
 </table>
-<a href="" class="btn btn-link">Write</a>
+<a href="/write" class="btn btn-link">Write</a>
 <%@ include file="_footer.jsp" %>
