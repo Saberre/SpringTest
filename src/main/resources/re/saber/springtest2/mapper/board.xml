@@ -11,6 +11,10 @@
 		SELECT `id`, `author`, `subject`, `created` FROM `articles` ORDER BY `created` DESC LIMIT #{offset}, #{count}
 	</select>
 	
+	<select id="getArticleCount" resultType="int">
+		SELECT COUNT(*) FROM `articles`;
+	</select>
+	
 	<select id="getArticle" parameterType="int" resultMap="articleResult">
 		SELECT * FROM `articles` WHERE `id` = #{id}
 	</select>
