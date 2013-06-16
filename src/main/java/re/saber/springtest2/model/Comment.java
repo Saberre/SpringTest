@@ -2,6 +2,8 @@ package re.saber.springtest2.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 public class Comment {
 
 	private int id;
@@ -46,6 +48,7 @@ public class Comment {
 		this.content = content;
 	}
 
+	@JsonSerialize(using = CustomDateSerializer.class)
 	public Date getCreated() {
 		return created;
 	}

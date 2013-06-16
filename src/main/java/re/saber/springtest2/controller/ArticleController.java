@@ -1,6 +1,11 @@
 package re.saber.springtest2.controller;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,19 +14,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import re.saber.springtest2.mapper.BoardMapper;
 import re.saber.springtest2.model.Article;
+import re.saber.springtest2.model.Comment;
 import re.saber.springtest2.validator.ArticleValidator;
+import re.saber.springtest2.validator.CommentValidator;
 
 /**
  * Handles requests for the application home page.
@@ -67,6 +76,7 @@ public class ArticleController {
 			throw new ResourceNotFoundException();
 
 		model.addAttribute("article", article);
+		model.addAttribute("comment", new Comment());
 
 		return "view";
 	}
@@ -123,6 +133,50 @@ public class ArticleController {
 		boardMapper.deleteArticle(articleId);
 		
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/{articleId:\\d+}/comment", method = RequestMethod.POST)
+	public @ResponseBody Object processCommentForm(@PathVariable int articleId, Comment comment, BindingResult result,
+			HttpServletResponse response) {
+		Article article = boardMapper.getArticle(articleId);
+
+		if (article == null)
+			throw new ResourceNotFoundException();
+		
+		new CommentValidator().validate(comment, result);
+		if (result.hasErrors()) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			List<FieldError> fieldErrors = result.getFieldErrors();
+			Map<String, String> errorMessages = new HashMap<String, String>();
+			for (FieldError fieldError : fieldErrors) {
+				errorMessages.put(fieldError.getField(), fieldError.getDefaultMessage());
+			}
+			return errorMessages;
+			//return "redirect:/";
+		}
+		
+		comment.setArticle(article);
+		comment.setCreated(new Date());
+		boardMapper.insertComment(comment);
+		
+		return comment;
+	}
+	
+	@RequestMapping(value = "/{articleId:\\d+}/comment/{commentId:\\d+}/delete", method = RequestMethod.GET)
+	public String processCommentForm(@PathVariable int articleId, @PathVariable int commentId) {
+		Article article = boardMapper.getArticle(articleId);
+
+		if (article == null)
+			throw new ResourceNotFoundException();
+		
+		Comment comment = boardMapper.getCommentOfArticle(commentId, articleId);
+		
+		if (comment == null)
+			throw new ResourceNotFoundException();
+		
+		boardMapper.deleteComment(commentId);
+		
+		return "redirect:/" + articleId;
 	}
 
 }

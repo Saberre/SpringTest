@@ -1,21 +1,57 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <jsp:include page="_header.jsp">
 	<jsp:param name="title" value="${article.subject}" />
 </jsp:include>
 <h1>${article.subject}</h1>
-<dl class="dl-horizontal">
-	<dt>Name</dt>
-	<dd>${article.author}</dd>
-	<dt>Created</dt>
-	<dd><fmt:formatDate value="${article.created}" pattern="yyyy-MM-dd HH:mm:ss" /></dd>
-	<dt>Content</dt>
-	<dd>${article.content}</dd>
-</dl>
+<small class="muted pull-left">${article.author}</small>
+<small class="muted pull-right"><fmt:formatDate value="${article.created}" pattern="yyyy-MM-dd HH:mm:ss" /></small>
+<hr>
 <div>
+${article.content}
+</div>
+<hr>
+<div>
+	<h4>Actions for Article</h4>
 	<a href="/${article.id}/edit" class="btn">Edit</a>
 	<a href="/${article.id}/delete" class="btn btn-danger">Delete</a>
 </div>
+<hr>
+<div>
+<h4>Comments</h4>
+<c:forEach items="${article.comments}" var="comment">
+<div>
+Commented by ${comment.author} at
+<fmt:formatDate value="${comment.created}" pattern="yyyy-MM-dd HH:mm:ss" />
+<a href="/${article.id}/comment/${comment.id}/delete" class="btn btn-mini btn-danger"><i class="icon-trash icon-white"></i></a>
+<blockquote>${comment.content}</blockquote>
+</div>
+</c:forEach>
+</div>
+<hr>
+<div>
+<form:form modelAttribute="comment" action="/${article.id}/comment" id="commentForm">
+<form:input path="author" />
+<form:textarea path="content" />
+<button type="submit" class="btn btn-primary">Write</button>
+</form:form>
+</div>
+<hr>
+<script>
+$(function () {
+	$('#commentForm').submit(function () {
+		var $form = $(this)
+		$.post(this.action, $form.serialize(), function (data) {
+			console.log(data);
+		}).fail(function (data) {
+			console.log(data.responseJSON);
+		});
+		
+		return false;
+	});
+});
+</script>
 <%@ include file="_footer.jsp" %>

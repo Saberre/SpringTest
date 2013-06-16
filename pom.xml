@@ -12,6 +12,7 @@
 		<org.springframework-version>3.1.4.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.12</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<com.jackson-version>2.2.2</com.jackson-version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -139,6 +140,23 @@
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.2.0</version>
+		</dependency>
+		
+		<!--  Jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${com.jackson-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${com.jackson-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${com.jackson-version}</version>
 		</dependency>
 	</dependencies>
     <build>

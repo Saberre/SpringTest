@@ -1,6 +1,9 @@
 package re.saber.springtest2.model;
 
 import java.util.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 public class Article {
 
@@ -13,6 +16,8 @@ public class Article {
 	private String content;
 
 	private Date created;
+	
+	private List<Comment> comments;
 
 	public int getId() {
 		return id;
@@ -52,6 +57,14 @@ public class Article {
 
 	public void setCreated(Date created) {
 		this.created = created;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 
 }

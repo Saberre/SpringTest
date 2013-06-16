@@ -6,6 +6,7 @@
 	<meta charset="utf-8">
 	<title>Board &raquo; ${param.title}</title>
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+	<script type="text/javascript" src="/js/jquery-1.10.1.min.js"></script>
 	<script type="text/javascript" src="/js/bootstrap.js"></script>
 </head>
 <body>

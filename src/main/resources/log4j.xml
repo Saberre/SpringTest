@@ -12,7 +12,7 @@
 	
 	<!-- Application Loggers -->
 	<logger name="re.saber.springtest2">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
@@ -30,6 +30,10 @@
 
 	<logger name="org.springframework.web">
 		<level value="info" />
+	</logger>
+	
+	<logger name="re.saber.springtest2.mapper">
+		<level value="trace" />
 	</logger>
 
 	<!-- Root Logger -->
