@@ -14,7 +14,10 @@
 	<div class="control-group">
 		<label class="control-label">Name</label>
 		<div class="controls">
-			<form:input path="author" />
+			<c:choose>
+				<c:when test="${article.id > 0}"><form:input path="author" readonly="true" /></c:when>
+				<c:otherwise><form:input path="author" /></c:otherwise>
+			</c:choose>
 			<form:errors path="author" cssClass="help-inline" />
 		</div>
 	</div>

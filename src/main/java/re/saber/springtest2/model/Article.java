@@ -3,8 +3,6 @@ package re.saber.springtest2.model;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 public class Article {
 
 	private int id;

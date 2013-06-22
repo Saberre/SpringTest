@@ -1,5 +1,6 @@
 package re.saber.springtest2.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -37,9 +38,9 @@ import re.saber.springtest2.validator.CommentValidator;
  */
 @Controller
 @SessionAttributes("article")
-public class ArticleController {
+public class BoardController {
 
-	private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
 	@Autowired
 	private BoardMapper boardMapper;
@@ -55,15 +56,29 @@ public class ArticleController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String list(@RequestParam(value = "count", required = false, defaultValue = "30") int count, Model model) {
-		if (count < 30)
-			count = 30;
+	public String list(
+			@RequestParam(value = "count", required = false, defaultValue = "30") int count,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+			Model model) {
+		if (page < 1)
+			page = 1;
+		/*if (count < 30)
+			count = 30;*/
 		else if (count > 100)
 			count = 100;
-		List<Article> articles = boardMapper.getArticleList(0, count);
+		
+		int total = boardMapper.getArticleCount();
+		int offset = (page - 1) * count;
+		if (offset >= total)
+			throw new ResourceNotFoundException();
+
+		Pagination pagination = new Pagination(page, total, count, 5);
+
+		List<Article> articles = boardMapper.getArticleList(offset, count);
 
 		model.addAttribute("articles", articles);
 		model.addAttribute("count", count);
+		model.addAttribute("pagination", pagination);
 
 		return "list";
 	}
@@ -147,12 +162,14 @@ public class ArticleController {
 		if (result.hasErrors()) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			List<FieldError> fieldErrors = result.getFieldErrors();
-			Map<String, String> errorMessages = new HashMap<String, String>();
+			List<Map<String, String>> errorMessages = new ArrayList<Map<String, String>>();
 			for (FieldError fieldError : fieldErrors) {
-				errorMessages.put(fieldError.getField(), fieldError.getDefaultMessage());
+				Map<String, String> errorMessage = new HashMap<String, String>();
+				errorMessage.put("fieldName", fieldError.getField());
+				errorMessage.put("message", fieldError.getDefaultMessage());
+				errorMessages.add(errorMessage);
 			}
 			return errorMessages;
-			//return "redirect:/";
 		}
 		
 		comment.setArticle(article);

@@ -34,5 +34,23 @@
 		</c:forEach>
 	</tbody>
 </table>
+<div class="pagination" style="text-align:center;">
+	<ul>
+		<c:choose>
+		<c:when test="${!pagination.hasPrevious}"><li class="disabled"><a>&laquo;</a></li></c:when>
+		<c:otherwise><li><a href="?page=${pagination.previous}&amp;count=${count}">&laquo;</a></li></c:otherwise>
+		</c:choose>
+		<c:forEach begin="${pagination.begin}" end="${pagination.end}" var="i">
+		<c:choose>
+		<c:when test="${i == pagination.cur}"><li class="active"><a>${i}</a></li></c:when>
+		<c:otherwise><li><a href="?page=${i}&amp;count=${count}">${i}</a></li></c:otherwise>
+		</c:choose>
+		</c:forEach>
+		<c:choose>
+		<c:when test="${!pagination.hasNext}"><li class="disabled"><a>&raquo;</a></li></c:when>
+		<c:otherwise><li><a href="?page=${pagination.next}&amp;count=${count}">&raquo;</a></li></c:otherwise>
+		</c:choose>
+	</ul>
+</div>
 <a href="/write" class="btn btn-link">Write</a>
 <%@ include file="_footer.jsp" %>

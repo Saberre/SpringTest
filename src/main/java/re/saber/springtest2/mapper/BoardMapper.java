@@ -11,6 +11,8 @@ public interface BoardMapper {
 
 	List<Article> getArticleList(@Param("offset") int offset, @Param("count") int count);
 	
+	int getArticleCount();
+	
 	Article getArticle(@Param("id") int id);
 	
 	void insertArticle(Article article);
